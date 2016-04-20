@@ -3,7 +3,7 @@ Pebble.addEventListener('ready', function() {
 });
 
 Pebble.addEventListener('showConfiguration', function() {
-  var url = 'https://mcdade.co.uk/pebble/index.html';
+  var url = 'https://rawgit.com/redlegoman/Colour-RLM-Simple-Watch-w-Config/master/web/index.html';
   console.log('Showing configuration page: ' + url);
 
   Pebble.openURL(url);
