@@ -4,6 +4,13 @@ Pebble.addEventListener('ready', function() {
 
 Pebble.addEventListener('showConfiguration', function() {
   var url = 'https://rawgit.com/redlegoman/Colour-RLM-Simple-Watch-w-Config/master/web/index.html';
+  
+  /*
+  
+  Above URL is on github (https://github.com/redlegoman/Colour-RLM-Simple-Watch-w-Config) and RELIES
+  ON IT BEING THERE - DO NOT DELETE IT!
+  
+  */
   console.log('Showing configuration page: ' + url);
 
   Pebble.openURL(url);
