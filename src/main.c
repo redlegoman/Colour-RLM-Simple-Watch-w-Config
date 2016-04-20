@@ -10,6 +10,9 @@
 #define D_KEY_COLOR_RED     7
 #define D_KEY_COLOR_GREEN   8
 #define D_KEY_COLOR_BLUE    9
+#define S_KEY_COLOR_RED     10
+#define S_KEY_COLOR_GREEN   11
+#define S_KEY_COLOR_BLUE    12
 
   
 static Window *s_main_window;
@@ -58,6 +61,10 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
   Tuple *d_color_green_t = dict_find(iter, D_KEY_COLOR_GREEN);
   Tuple *d_color_blue_t = dict_find(iter, D_KEY_COLOR_BLUE);
 
+  Tuple *s_color_red_t = dict_find(iter, S_KEY_COLOR_RED);
+  Tuple *s_color_green_t = dict_find(iter, S_KEY_COLOR_GREEN);
+  Tuple *s_color_blue_t = dict_find(iter, S_KEY_COLOR_BLUE);
+
   
   if(color_red_t && color_green_t && color_blue_t) {
     // Apply the color if available
@@ -74,6 +81,9 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
     int d_red = d_color_red_t->value->int32;
     int d_green = d_color_green_t->value->int32;
     int d_blue = d_color_blue_t->value->int32;
+    int s_red = s_color_red_t->value->int32;
+    int s_green = s_color_green_t->value->int32;
+    int s_blue = s_color_blue_t->value->int32;
 
     // Persist values
     persist_write_int(KEY_COLOR_RED, red);
@@ -85,15 +95,21 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
     persist_write_int(D_KEY_COLOR_RED, red);
     persist_write_int(D_KEY_COLOR_GREEN, green);
     persist_write_int(D_KEY_COLOR_BLUE, blue);
+    persist_write_int(S_KEY_COLOR_RED, red);
+    persist_write_int(S_KEY_COLOR_GREEN, green);
+    persist_write_int(S_KEY_COLOR_BLUE, blue);
 
 
     GColor bg_color = GColorFromRGB(red, green, blue);
     GColor t_color = GColorFromRGB(t_red, t_green, t_blue);
     GColor d_color = GColorFromRGB(d_red, d_green, d_blue);
+    GColor s_color = GColorFromRGB(s_red, s_green, s_blue);
     window_set_background_color(s_main_window, bg_color);
     text_layer_set_text_color(s_time_layer, t_color);
     text_layer_set_text_color(s_day_layer, d_color);
     text_layer_set_text_color(s_date_layer, d_color);
+    text_layer_set_text_color(s_right_layer, s_color);
+
 
 
     //text_layer_set_text_color(s_text_layer, gcolor_is_dark(bg_color) ? GColorWhite : GColorBlack);

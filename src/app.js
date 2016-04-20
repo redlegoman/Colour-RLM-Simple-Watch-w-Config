@@ -3,7 +3,7 @@ Pebble.addEventListener('ready', function() {
 });
 
 Pebble.addEventListener('showConfiguration', function() {
-  var url = 'https://rawgit.com/redlegoman/Colour-RLM-Simple-Watch-w-Config/master/web/index.html';
+  var url = 'https://cdn.rawgit.com/redlegoman/Colour-RLM-Simple-Watch-w-Config/master/web/index.html';
   
   /*
   
@@ -23,6 +23,7 @@ Pebble.addEventListener('webviewclosed', function(e) {
   var backgroundColor = configData['background_color'];
   var timeColor = configData['time_color'];
   var dateColor = configData['date_color'];
+  var secsColor = configData['secs_color'];
 
   var dict = {};
   //if(configData['high_contrast'] === true) {
@@ -39,6 +40,10 @@ Pebble.addEventListener('webviewclosed', function(e) {
     dict['D_KEY_COLOR_RED'] = parseInt(dateColor.substring(2, 4), 16);
     dict['D_KEY_COLOR_GREEN'] = parseInt(dateColor.substring(4, 6), 16);
     dict['D_KEY_COLOR_BLUE'] = parseInt(dateColor.substring(6), 16);
+    
+    dict['S_KEY_COLOR_RED'] = parseInt(secsColor.substring(2, 4), 16);
+    dict['S_KEY_COLOR_GREEN'] = parseInt(secsColor.substring(4, 6), 16);
+    dict['S_KEY_COLOR_BLUE'] = parseInt(secsColor.substring(6), 16);
     
     
     
