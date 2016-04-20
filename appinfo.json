@@ -1,0 +1,78 @@
+{
+    "appKeys": {
+        "KEY_COLOR_BLUE": 2,
+        "KEY_COLOR_GREEN": 1,
+        "KEY_COLOR_RED": 0,
+        "KEY_HIGH_CONTRAST": 3,
+        "T_KEY_COLOR_BLUE": 6,
+        "T_KEY_COLOR_GREEN": 5,
+        "T_KEY_COLOR_RED": 4
+    },
+    "capabilities": [
+        "configurable"
+    ],
+    "companyName": "Andy McDade",
+    "enableMultiJS": false,
+    "longName": "RLM Simple Watch 2 w/Config",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/screenshot.png",
+                "name": "IMAGE_SCREENSHOT_1",
+                "type": "png"
+            },
+            {
+                "file": "images/menuimage1.png",
+                "menuIcon": true,
+                "name": "IMAGE_MENU_2",
+                "type": "png"
+            },
+            {
+                "characterRegex": "[0-9:.]",
+                "compatibility": "2.7",
+                "file": "fonts/renegadolaser.ttf",
+                "name": "FONT_RENEGADO_39",
+                "type": "font"
+            },
+            {
+                "characterRegex": "[A-Za-z0-9:.]",
+                "compatibility": "2.7",
+                "file": "fonts/renegadolaser.ttf",
+                "name": "FONT_RENEGADO_14",
+                "type": "font"
+            },
+            {
+                "characterRegex": "[a-zA-Z0-9:]",
+                "compatibility": "2.7",
+                "file": "fonts/Sans Sara.ttf",
+                "name": "FONT_SARA_27",
+                "type": "font"
+            },
+            {
+                "characterRegex": "[0-9:]",
+                "compatibility": "2.7",
+                "file": "fonts/Sans Sara.ttf",
+                "name": "FONT_SARA_53",
+                "type": "font"
+            },
+            {
+                "characterRegex": "[0-9:]",
+                "compatibility": "2.7",
+                "file": "fonts/EmporiumNF.ttf",
+                "name": "FONT_TIME_68",
+                "type": "font"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "RLMSimpleColourConfig",
+    "targetPlatforms": [
+        "basalt"
+    ],
+    "uuid": "562fa34c-9369-4767-883d-42f2eeba017f",
+    "versionLabel": "0.3",
+    "watchapp": {
+        "watchface": true
+    }
+}
