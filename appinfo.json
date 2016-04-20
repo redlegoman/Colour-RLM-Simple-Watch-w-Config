@@ -1,5 +1,8 @@
 {
     "appKeys": {
+        "D_KEY_COLOR_BLUE": 9,
+        "D_KEY_COLOR_GREEN": 8,
+        "D_KEY_COLOR_RED": 7,
         "KEY_COLOR_BLUE": 2,
         "KEY_COLOR_GREEN": 1,
         "KEY_COLOR_RED": 0,
