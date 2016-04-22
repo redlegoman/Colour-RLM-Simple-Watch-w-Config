@@ -34,88 +34,7 @@ static bool gcolor_is_dark(GColor color) {
 #endif
 }
 
-static void inbox_received_handler(DictionaryIterator *iter, void *context) {
-  // High contrast selected?
-  Tuple *high_contrast_t = dict_find(iter, KEY_HIGH_CONTRAST);
-  if(high_contrast_t && high_contrast_t->value->int8 > 0) {  // Read boolean as an integer
-    // Change color scheme
-    window_set_background_color(s_main_window, GColorBlack);
-    //text_layer_set_text_color(s_text_layer, GColorWhite);
 
-    // Persist value
-    persist_write_bool(KEY_HIGH_CONTRAST, true);
-  } else {
-    persist_write_bool(KEY_HIGH_CONTRAST, false);
-  }
-
-  // Color scheme?
-  Tuple *color_red_t = dict_find(iter, KEY_COLOR_RED);
-  Tuple *color_green_t = dict_find(iter, KEY_COLOR_GREEN);
-  Tuple *color_blue_t = dict_find(iter, KEY_COLOR_BLUE);
-  
-  Tuple *t_color_red_t = dict_find(iter, T_KEY_COLOR_RED);
-  Tuple *t_color_green_t = dict_find(iter, T_KEY_COLOR_GREEN);
-  Tuple *t_color_blue_t = dict_find(iter, T_KEY_COLOR_BLUE);
-
-  Tuple *d_color_red_t = dict_find(iter, D_KEY_COLOR_RED);
-  Tuple *d_color_green_t = dict_find(iter, D_KEY_COLOR_GREEN);
-  Tuple *d_color_blue_t = dict_find(iter, D_KEY_COLOR_BLUE);
-
-  Tuple *s_color_red_t = dict_find(iter, S_KEY_COLOR_RED);
-  Tuple *s_color_green_t = dict_find(iter, S_KEY_COLOR_GREEN);
-  Tuple *s_color_blue_t = dict_find(iter, S_KEY_COLOR_BLUE);
-
-  
-  if(color_red_t && color_green_t && color_blue_t) {
-    // Apply the color if available
-#if defined(PBL_BW)
-    window_set_background_color(s_main_window, GColorBlack);
-    //text_layer_set_text_color(s_text_layer, GColorBlack);
-#elif defined(PBL_COLOR)
-    int red = color_red_t->value->int32;
-    int green = color_green_t->value->int32;
-    int blue = color_blue_t->value->int32;
-    int t_red = t_color_red_t->value->int32;
-    int t_green = t_color_green_t->value->int32;
-    int t_blue = t_color_blue_t->value->int32;
-    int d_red = d_color_red_t->value->int32;
-    int d_green = d_color_green_t->value->int32;
-    int d_blue = d_color_blue_t->value->int32;
-    int s_red = s_color_red_t->value->int32;
-    int s_green = s_color_green_t->value->int32;
-    int s_blue = s_color_blue_t->value->int32;
-
-    // Persist values
-    persist_write_int(KEY_COLOR_RED, red);
-    persist_write_int(KEY_COLOR_GREEN, green);
-    persist_write_int(KEY_COLOR_BLUE, blue);
-    persist_write_int(T_KEY_COLOR_RED, red);
-    persist_write_int(T_KEY_COLOR_GREEN, green);
-    persist_write_int(T_KEY_COLOR_BLUE, blue);
-    persist_write_int(D_KEY_COLOR_RED, red);
-    persist_write_int(D_KEY_COLOR_GREEN, green);
-    persist_write_int(D_KEY_COLOR_BLUE, blue);
-    persist_write_int(S_KEY_COLOR_RED, red);
-    persist_write_int(S_KEY_COLOR_GREEN, green);
-    persist_write_int(S_KEY_COLOR_BLUE, blue);
-
-
-    GColor bg_color = GColorFromRGB(red, green, blue);
-    GColor t_color = GColorFromRGB(t_red, t_green, t_blue);
-    GColor d_color = GColorFromRGB(d_red, d_green, d_blue);
-    GColor s_color = GColorFromRGB(s_red, s_green, s_blue);
-    window_set_background_color(s_main_window, bg_color);
-    text_layer_set_text_color(s_time_layer, t_color);
-    text_layer_set_text_color(s_day_layer, d_color);
-    text_layer_set_text_color(s_date_layer, d_color);
-    text_layer_set_text_color(s_right_layer, s_color);
-
-
-
-    //text_layer_set_text_color(s_text_layer, gcolor_is_dark(bg_color) ? GColorWhite : GColorBlack);
-#endif
-  }
-}
 
 
 static void update_time(BatteryChargeState chargeState) {
@@ -193,7 +112,7 @@ static void main_window_load(Window *window) {
   text_layer_set_text(s_time_layer, "00:00");
   //date       from left, from top, size from left, size from top
   //s_date_layer = text_layer_create(GRect(60, 104, 84, 40));
-  s_date_layer = text_layer_create(GRect(0, 110, 144, 30));
+  s_date_layer = text_layer_create(GRect(0, 109, 144, 30));
   text_layer_set_background_color(s_date_layer, GColorClear);
   text_layer_set_text_color(s_date_layer, GColorPictonBlue);
   text_layer_set_text(s_date_layer, "00 MTH");
@@ -233,9 +152,9 @@ static void main_window_load(Window *window) {
 
   //seconds       from left, from top, size from left, size from top
   #ifdef PBL_COLOR
-    s_right_layer = text_layer_create(GRect(124, 149, 20, 20)); /// CHECK DIMENSIONS
+    s_right_layer = text_layer_create(GRect(123, 149, 20, 20)); /// CHECK DIMENSIONS
   #else
-    s_right_layer = text_layer_create(GRect(124, 153, 20, 20)); /// CHECK DIMENSIONS
+    s_right_layer = text_layer_create(GRect(123, 153, 20, 20)); /// CHECK DIMENSIONS
   #endif
   text_layer_set_background_color(s_right_layer, GColorClear);
   text_layer_set_text_color(s_right_layer, GColorDarkCandyAppleRed);
@@ -272,9 +191,121 @@ static void main_window_load(Window *window) {
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_right_layer));
   
 
+//####################################################################################
+    // Color scheme?
+    int red = persist_read_int(KEY_COLOR_RED);
+    int green = persist_read_int(KEY_COLOR_GREEN);
+    int blue = persist_read_int(KEY_COLOR_BLUE);
+    int t_red = persist_read_int(T_KEY_COLOR_RED);
+    int t_green = persist_read_int(T_KEY_COLOR_GREEN);
+    int t_blue = persist_read_int(T_KEY_COLOR_BLUE);
+    int d_red = persist_read_int(D_KEY_COLOR_RED);
+    int d_green = persist_read_int(D_KEY_COLOR_GREEN);
+    int d_blue = persist_read_int(D_KEY_COLOR_BLUE);
+    int s_red = persist_read_int(S_KEY_COLOR_RED);
+    int s_green = persist_read_int(S_KEY_COLOR_GREEN);
+    int s_blue = persist_read_int(S_KEY_COLOR_BLUE);
 
+  
+    GColor bg_color = GColorFromRGB(red, green, blue);
+    GColor t_color = GColorFromRGB(t_red, t_green, t_blue);
+    GColor d_color = GColorFromRGB(d_red, d_green, d_blue);
+    GColor s_color = GColorFromRGB(s_red, s_green, s_blue);
+    window_set_background_color(s_main_window, bg_color);
+    text_layer_set_text_color(s_time_layer, t_color);
+    text_layer_set_text_color(s_day_layer, d_color);
+    text_layer_set_text_color(s_date_layer, d_color);
+    text_layer_set_text_color(s_right_layer, s_color);
+//####################################################################################
+  
+  
+  
+  
   // Make sure the time is displayed from the start
   update_time(battery_state_service_peek());
+}
+
+static void inbox_received_handler(DictionaryIterator *iter, void *context) {
+  // High contrast selected?
+  Tuple *high_contrast_t = dict_find(iter, KEY_HIGH_CONTRAST);
+  if(high_contrast_t && high_contrast_t->value->int8 > 0) {  // Read boolean as an integer
+    // Change color scheme
+    window_set_background_color(s_main_window, GColorBlack);
+    //text_layer_set_text_color(s_text_layer, GColorWhite);
+
+    // Persist value
+    persist_write_bool(KEY_HIGH_CONTRAST, true);
+  } else {
+    persist_write_bool(KEY_HIGH_CONTRAST, false);
+  }
+
+  // Color scheme?
+  Tuple *color_red_t = dict_find(iter, KEY_COLOR_RED);
+  Tuple *color_green_t = dict_find(iter, KEY_COLOR_GREEN);
+  Tuple *color_blue_t = dict_find(iter, KEY_COLOR_BLUE);
+  
+  Tuple *t_color_red_t = dict_find(iter, T_KEY_COLOR_RED);
+  Tuple *t_color_green_t = dict_find(iter, T_KEY_COLOR_GREEN);
+  Tuple *t_color_blue_t = dict_find(iter, T_KEY_COLOR_BLUE);
+
+  Tuple *d_color_red_t = dict_find(iter, D_KEY_COLOR_RED);
+  Tuple *d_color_green_t = dict_find(iter, D_KEY_COLOR_GREEN);
+  Tuple *d_color_blue_t = dict_find(iter, D_KEY_COLOR_BLUE);
+
+  Tuple *s_color_red_t = dict_find(iter, S_KEY_COLOR_RED);
+  Tuple *s_color_green_t = dict_find(iter, S_KEY_COLOR_GREEN);
+  Tuple *s_color_blue_t = dict_find(iter, S_KEY_COLOR_BLUE);
+
+  
+  if(color_red_t && color_green_t && color_blue_t) {
+    // Apply the color if available
+#if defined(PBL_BW)
+    window_set_background_color(s_main_window, GColorBlack);
+    //text_layer_set_text_color(s_text_layer, GColorBlack);
+#elif defined(PBL_COLOR)
+    int red = color_red_t->value->int32;
+    int green = color_green_t->value->int32;
+    int blue = color_blue_t->value->int32;
+    int t_red = t_color_red_t->value->int32;
+    int t_green = t_color_green_t->value->int32;
+    int t_blue = t_color_blue_t->value->int32;
+    int d_red = d_color_red_t->value->int32;
+    int d_green = d_color_green_t->value->int32;
+    int d_blue = d_color_blue_t->value->int32;
+    int s_red = s_color_red_t->value->int32;
+    int s_green = s_color_green_t->value->int32;
+    int s_blue = s_color_blue_t->value->int32;
+
+    // Persist values
+    persist_write_int(KEY_COLOR_RED, red);
+    persist_write_int(KEY_COLOR_GREEN, green);
+    persist_write_int(KEY_COLOR_BLUE, blue);
+    persist_write_int(T_KEY_COLOR_RED, t_red);
+    persist_write_int(T_KEY_COLOR_GREEN, t_green);
+    persist_write_int(T_KEY_COLOR_BLUE, t_blue);
+    persist_write_int(D_KEY_COLOR_RED, d_red);
+    persist_write_int(D_KEY_COLOR_GREEN, d_green);
+    persist_write_int(D_KEY_COLOR_BLUE, d_blue);
+    persist_write_int(S_KEY_COLOR_RED, s_red);
+    persist_write_int(S_KEY_COLOR_GREEN, s_green);
+    persist_write_int(S_KEY_COLOR_BLUE, s_blue);
+
+
+    GColor bg_color = GColorFromRGB(red, green, blue);
+    GColor t_color = GColorFromRGB(t_red, t_green, t_blue);
+    GColor d_color = GColorFromRGB(d_red, d_green, d_blue);
+    GColor s_color = GColorFromRGB(s_red, s_green, s_blue);
+    window_set_background_color(s_main_window, bg_color);
+    text_layer_set_text_color(s_time_layer, t_color);
+    text_layer_set_text_color(s_day_layer, d_color);
+    text_layer_set_text_color(s_date_layer, d_color);
+    text_layer_set_text_color(s_right_layer, s_color);
+
+
+
+    //text_layer_set_text_color(s_text_layer, gcolor_is_dark(bg_color) ? GColorWhite : GColorBlack);
+#endif
+  }
 }
 
 static void main_window_unload(Window *window) {
@@ -291,6 +322,11 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 }
   
 static void init() {
+  
+  app_message_register_inbox_received(inbox_received_handler);
+  app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
+  
+  
   // Create main Window element and assign to pointer
   s_main_window = window_create();
 
@@ -300,7 +336,7 @@ static void init() {
     .unload = main_window_unload
   });
 
-  // Show the Window on the watch, with animated=true
+  // Show the Window on the watch
   window_set_background_color(s_main_window, GColorBlack);
 
   window_stack_push(s_main_window, true);
@@ -308,8 +344,7 @@ static void init() {
   // Register with TickTimerService
   tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
   
-  app_message_register_inbox_received(inbox_received_handler);
-  app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
+  
 }
 
 static void deinit() {
