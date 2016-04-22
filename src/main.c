@@ -132,12 +132,6 @@ static void main_window_load(Window *window) {
   text_layer_set_text_color(s_rightbar_layer, GColorBlack);
 //------  NOT NEEDED??----------------------------------------------
   
-#ifdef PBL_COLOR
-
-  
-#else
-  window_set_background_color(s_main_window, GColorBlack);
-#endif
   
   //percent       from left, from top, size from left, size from top
   #ifdef PBL_COLOR
@@ -211,11 +205,21 @@ static void main_window_load(Window *window) {
     GColor t_color = GColorFromRGB(t_red, t_green, t_blue);
     GColor d_color = GColorFromRGB(d_red, d_green, d_blue);
     GColor s_color = GColorFromRGB(s_red, s_green, s_blue);
+  if(persist_read_int(KEY_COLOR_RED)){
     window_set_background_color(s_main_window, bg_color);
     text_layer_set_text_color(s_time_layer, t_color);
     text_layer_set_text_color(s_day_layer, d_color);
     text_layer_set_text_color(s_date_layer, d_color);
     text_layer_set_text_color(s_right_layer, s_color);
+
+  }else{
+    window_set_background_color(s_main_window, GColorBlack);
+    text_layer_set_text_color(s_time_layer, GColorWhite);
+    text_layer_set_text_color(s_day_layer, GColorPictonBlue);
+    text_layer_set_text_color(s_date_layer, GColorPictonBlue);
+    text_layer_set_text_color(s_right_layer, GColorDarkCandyAppleRed);
+}
+  
 //####################################################################################
   
   
@@ -337,7 +341,7 @@ static void init() {
   });
 
   // Show the Window on the watch
-  window_set_background_color(s_main_window, GColorBlack);
+  //window_set_background_color(s_main_window, GColorWhite);
 
   window_stack_push(s_main_window, true);
   
