@@ -172,6 +172,8 @@
     // Load any previously saved configuration, if available
     if(localStorage['high_contrast']) {
       highContrastCheckbox.checked = JSON.parse(localStorage['high_contrast']);
+		}	
+    if(localStorage['config_set']) {
       config_set.value = localStorage['config_set'];
       backgroundColorPicker.value = localStorage['background_color'];
       timeColorPicker.value = localStorage['time_color'];
