@@ -23,7 +23,7 @@
   </head>
 
   <body>
-    <h1 class='title'>* RLM Simple Colour Watch</h1>
+    <h1 class='title'>TEST TEST TEST RLM Simple Colour Watch</h1>
 <!--
     <div class='item-container'>
       <div class='item-container-content'>
@@ -94,6 +94,7 @@
 -->
           <!--<input id='high_contrast_checkbox' type='checkbox' class='item-toggle'>-->
           <input id='high_contrast_checkbox' type='hidden' xclass='item-toggle'>
+          <input id='config_set' type='text' value='1' >
 <!--
         </label>
       </div>
@@ -116,13 +117,15 @@
     var dateColorPicker = document.getElementById('date_color_picker');
     var secsColorPicker = document.getElementById('secs_color_picker');
     var highContrastCheckbox = document.getElementById('high_contrast_checkbox');
+    var config_set = document.getElementById('config_set');
  
     var options = {
       'secs_color': secsColorPicker.value,
       'date_color': dateColorPicker.value,
       'time_color': timeColorPicker.value,
       'background_color': backgroundColorPicker.value,
-      'high_contrast': highContrastCheckbox.checked
+      'high_contrast': highContrastCheckbox.checked,
+      'config_set': config_set.value
     };
 
     // Save for next launch
@@ -131,6 +134,7 @@
     localStorage['time_color'] = options['time_color'];
     localStorage['background_color'] = options['background_color'];
     localStorage['high_contrast'] = options['high_contrast'];
+    localStorage['config_set'] = options['config_set'];
 
     console.log('Got options: ' + JSON.stringify(options));
     return options;
@@ -163,10 +167,12 @@
     var timeColorPicker = document.getElementById('time_color_picker');
     var backgroundColorPicker = document.getElementById('background_color_picker');
     var highContrastCheckbox = document.getElementById('high_contrast_checkbox');
+    var config_set = document.getElementById('config_set');
 
     // Load any previously saved configuration, if available
     if(localStorage['high_contrast']) {
       highContrastCheckbox.checked = JSON.parse(localStorage['high_contrast']);
+      config_set.value = localStorage['config_set'];
       backgroundColorPicker.value = localStorage['background_color'];
       timeColorPicker.value = localStorage['time_color'];
       dateColorPicker.value = localStorage['date_color'];
