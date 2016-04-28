@@ -6,6 +6,7 @@
         "KEY_COLOR_BLUE": 2,
         "KEY_COLOR_GREEN": 1,
         "KEY_COLOR_RED": 0,
+        "KEY_CONFIG_SET": 13,
         "KEY_HIGH_CONTRAST": 3,
         "S_KEY_COLOR_BLUE": 12,
         "S_KEY_COLOR_GREEN": 11,
@@ -35,13 +36,6 @@
                 "type": "png"
             },
             {
-                "characterRegex": "[0-9:.]",
-                "compatibility": "2.7",
-                "file": "fonts/renegadolaser.ttf",
-                "name": "FONT_RENEGADO_39",
-                "type": "font"
-            },
-            {
                 "characterRegex": "[A-Za-z0-9:.]",
                 "compatibility": "2.7",
                 "file": "fonts/renegadolaser.ttf",
@@ -49,10 +43,10 @@
                 "type": "font"
             },
             {
-                "characterRegex": "[a-zA-Z0-9:]",
+                "characterRegex": "[0-9:.]",
                 "compatibility": "2.7",
-                "file": "fonts/Sans Sara.ttf",
-                "name": "FONT_SARA_27",
+                "file": "fonts/renegadolaser.ttf",
+                "name": "FONT_RENEGADO_39",
                 "type": "font"
             },
             {
@@ -60,6 +54,13 @@
                 "compatibility": "2.7",
                 "file": "fonts/Sans Sara.ttf",
                 "name": "FONT_SARA_53",
+                "type": "font"
+            },
+            {
+                "characterRegex": "[a-zA-Z0-9:]",
+                "compatibility": "2.7",
+                "file": "fonts/Sans Sara.ttf",
+                "name": "FONT_SARA_27",
                 "type": "font"
             },
             {

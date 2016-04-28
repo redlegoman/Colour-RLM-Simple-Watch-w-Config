@@ -13,6 +13,7 @@
 #define S_KEY_COLOR_RED     10
 #define S_KEY_COLOR_GREEN   11
 #define S_KEY_COLOR_BLUE    12
+#define KEY_CONFIG_SET      13
 
   
 static Window *s_main_window;
@@ -26,6 +27,7 @@ static TextLayer *s_rightbar_layer;
 static TextLayer *s_left_layer;
 static TextLayer *s_right_layer;
 
+/*
 static bool gcolor_is_dark(GColor color) {
 #if defined(PBL_BW)
   return gcolor_equal(color, GColorBlack);
@@ -33,6 +35,7 @@ static bool gcolor_is_dark(GColor color) {
   return color.r < 2 && color.g < 2 && color.b < 2;
 #endif
 }
+*/
 
 
 
@@ -205,7 +208,13 @@ static void main_window_load(Window *window) {
     GColor t_color = GColorFromRGB(t_red, t_green, t_blue);
     GColor d_color = GColorFromRGB(d_red, d_green, d_blue);
     GColor s_color = GColorFromRGB(s_red, s_green, s_blue);
-  if(persist_read_int(KEY_COLOR_RED)){
+  if(
+    persist_read_int(KEY_COLOR_RED) || 
+    persist_read_int(T_KEY_COLOR_RED) || 
+    persist_read_int(D_KEY_COLOR_RED) || 
+    persist_read_int(S_KEY_COLOR_RED)  
+    )
+  {
     window_set_background_color(s_main_window, bg_color);
     text_layer_set_text_color(s_time_layer, t_color);
     text_layer_set_text_color(s_day_layer, d_color);
