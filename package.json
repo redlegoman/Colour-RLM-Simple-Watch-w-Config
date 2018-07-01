@@ -8,7 +8,7 @@
             "configurable"
         ],
         "displayName": "RLM Simple Watch 2 w/Config",
-        "enableMultiJS": true,
+        "enableMultiJS": false,
         "messageKeys": {
             "D_KEY_COLOR_BLUE": 9,
             "D_KEY_COLOR_GREEN": 8,
@@ -78,12 +78,15 @@
         },
         "sdkVersion": "3",
         "targetPlatforms": [
-            "basalt"
+            "aplite",
+            "basalt",
+            "diorite",
+            "emery"
         ],
         "uuid": "ad143b00-a79d-4b9e-ae15-0c579202ab52",
         "watchapp": {
             "watchface": true
         }
     },
-    "version": "1.114.0"
+    "version": "1.115.0"
 }

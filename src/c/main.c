@@ -327,15 +327,17 @@ static void main_window_load(Window *window) {
     text_layer_set_text_color(s_time_layer, t_color);
     text_layer_set_text_color(s_day_layer, d_color);
     text_layer_set_text_color(s_date_layer, d_color);
-    text_layer_set_text_color(s_right_layer, s_color);
+//    text_layer_set_text_color(s_right_layer, s_color);
 
   }else{
     window_set_background_color(s_main_window, GColorBlack);
     text_layer_set_text_color(s_time_layer, GColorWhite);
     text_layer_set_text_color(s_day_layer, GColorPictonBlue);
     text_layer_set_text_color(s_date_layer, GColorPictonBlue);
-    text_layer_set_text_color(s_right_layer, GColorDarkCandyAppleRed);
+   // text_layer_set_text_color(s_right_layer, GColorWhite);
 }
+  text_layer_set_text_color(s_right_layer, GColorWhite);
+  text_layer_set_text_color(s_left_layer, GColorWhite);
   
 //####################################################################################
   
