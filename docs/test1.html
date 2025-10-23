@@ -6,7 +6,7 @@
 <META HTTP-EQUIV="Expires" CONTENT="Mon, 01 Jan 1990 00:00:00 GMT">
 <meta http-equiv="Cache-Control" CONTENT="no-store, must-revalidate, no-cache, max-age=0">
 
-  <title>RLM Simple Colour Watch (docs)</title>
+  <title>RLM Simple Colour Watch</title>
   <link rel='stylesheet' type='text/css' href='css/slate.min.css'>
   <script src='js/slate.min.js'></script>
   <style>
@@ -23,7 +23,7 @@
   </head>
 
   <body>
-    <h1 class='title'>v2 : RLM Simple Colour Watch (docs)</h1>
+    <h1 class='title'>TEST TEST TEST RLM Simple Colour Watch</h1>
 <!--
     <div class='item-container'>
       <div class='item-container-content'>
@@ -94,7 +94,7 @@
 -->
           <!--<input id='high_contrast_checkbox' type='checkbox' class='item-toggle'>-->
           <input id='high_contrast_checkbox' type='hidden' xclass='item-toggle'>
-          <input id='config_set' type='text' value='1' >
+          <input id='config_set' type='hidden' value=1 xclass='item-toggle'>
 <!--
         </label>
       </div>
@@ -172,8 +172,6 @@
     // Load any previously saved configuration, if available
     if(localStorage['high_contrast']) {
       highContrastCheckbox.checked = JSON.parse(localStorage['high_contrast']);
-		}	
-    if(localStorage['config_set']) {
       config_set.value = localStorage['config_set'];
       backgroundColorPicker.value = localStorage['background_color'];
       timeColorPicker.value = localStorage['time_color'];
