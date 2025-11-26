@@ -287,9 +287,11 @@ static void main_window_load(Window *window) {
 //  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_rightbar_layer));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_left_layer));
 
-//**
+//** ANDY
 // this actually write the seconds to the watch face:
- // layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_right_layer));
+  #ifdef KEY_SHOW_SECS
+   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_right_layer));
+  #endif
   
 
 //####################################################################################

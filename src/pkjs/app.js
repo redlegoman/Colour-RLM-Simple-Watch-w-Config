@@ -34,6 +34,8 @@ Pebble.addEventListener('webviewclosed', function(e) {
   var config_set = configData['config_set'];
   //**
 
+  var show_secs = configData['show_secs'];
+
   var dict = {};
   //if(configData['high_contrast'] === true) {
     //dict['KEY_HIGH_CONTRAST'] = configData['high_contrast'] ? 1 : 0;  // Send a boolean as an integer
@@ -55,6 +57,9 @@ Pebble.addEventListener('webviewclosed', function(e) {
     dict['S_KEY_COLOR_BLUE'] = parseInt(secsColor.substring(6), 16);
   
     dict['KEY_CONFIG_SET'] = parseInt(config_set);
+
+    if(configData['show_secs'] === true) {
+    dict['KEY_SHOW_SECS'] = configData['show_secs'] ? 1 : 0;  // Send a boolean as an integer
     
   console.log(' **  (JS) test point here');
   //console.log(config_set);
