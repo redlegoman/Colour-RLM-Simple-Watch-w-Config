@@ -8,7 +8,8 @@ Pebble.addEventListener('showConfiguration', function() {
   //var url = 'https://rawgit.com/redlegoman/Colour-RLM-Simple-Watch-w-Config/fixconfig/web/test4.html?01';
   
   //var url = 'https://cdn.rawgit.com/redlegoman/Colour-RLM-Simple-Watch-w-Config/2bccaac62b1450725c93d48492b8004bd332852a/web/v2.html';
-  var url = 'http://redlegoman.github.io/Colour-RLM-Simple-Watch-w-Config/index.html';
+  //var url = 'http://redlegoman.github.io/Colour-RLM-Simple-Watch-w-Config/index.html';
+  var url = 'https://redlegoman.github.io/Colour-RLM-Simple-Watch-w-Config/testindex.html';
   
   /*
   
@@ -60,6 +61,8 @@ Pebble.addEventListener('webviewclosed', function(e) {
 
     if(configData['show_secs'] === true) {
     dict['KEY_SHOW_SECS'] = configData['show_secs'] ? 1 : 0;  // Send a boolean as an integer
+    }
+    dict['KEY_SHOW_SECS'] = show_secs;
     
   console.log(' **  (JS) test point here');
   //console.log(config_set);

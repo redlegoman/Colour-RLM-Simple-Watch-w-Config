@@ -14,6 +14,7 @@
 #define S_KEY_COLOR_GREEN   11
 #define S_KEY_COLOR_BLUE    12
 #define KEY_CONFIG_SET      13
+#define KEY_SHOW_SECS      0
 
   
 static Window *s_main_window;
@@ -26,6 +27,8 @@ static TextLayer *s_leftbar_layer;
 static TextLayer *s_rightbar_layer;
 static TextLayer *s_left_layer;
 static TextLayer *s_right_layer;
+
+static bool s_show_seconds = true;
 
 /*
 static bool gcolor_is_dark(GColor color) {
@@ -101,6 +104,20 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
   } else {
     persist_write_bool(KEY_HIGH_CONTRAST, false);
   }
+
+
+
+
+
+  Tuple *show_seconds_t = dict_find(iter, KEY_SHOW_SECS);
+  if (show_seconds_t) {
+    s_show_seconds = show_seconds_t->value->int32 == 1;
+    persist_write_bool(KEY_SHOW_SECS, s_show_seconds);
+
+    
+  }
+
+
 
   // Color scheme?
   Tuple *color_red_t = dict_find(iter, KEY_COLOR_RED);
@@ -289,9 +306,17 @@ static void main_window_load(Window *window) {
 
 //** ANDY
 // this actually write the seconds to the watch face:
-  #ifdef KEY_SHOW_SECS
-   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_right_layer));
-  #endif
+  //if(show_secs_t){
+  //if(KEY_SHOW_SECS){
+//  if (s_show_seconds) {
+//    layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_right_layer));
+//  }
+//
+//    if (s_show_seconds) {
+//      layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_right_layer));
+//    } else {
+//      layer_remove_from_parent(text_layer_get_layer(s_right_layer));
+//    }
   
 
 //####################################################################################
@@ -388,7 +413,8 @@ static void init() {
   window_stack_push(s_main_window, true);
   
   // Register with TickTimerService
-  tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
+  //tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
+  tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
   
   
 }
