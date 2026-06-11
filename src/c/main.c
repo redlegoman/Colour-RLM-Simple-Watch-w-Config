@@ -177,7 +177,7 @@ static void main_window_load(Window *window) {
 
   // Time Layer - Center target anchor point
   // Adjust time_y to split the difference between the extremes
-  int time_y = (bounds.size.h / 2) - 70;
+  int time_y = (bounds.size.h / 2) - 65;
   // Increase the height to accommodate the larger font
   s_time_layer = text_layer_create(GRect(0, time_y, bounds.size.w, 120));
 
