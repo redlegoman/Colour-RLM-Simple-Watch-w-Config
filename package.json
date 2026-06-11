@@ -2,7 +2,7 @@
     "author": "Andy McDade",
     "dependencies": {},
     "keywords": [],
-    "name": "rlmsimplecolourconfig3",
+    "name": "rlm-simple-watch-pt2",
     "pebble": {
         "capabilities": [
             "configurable"
