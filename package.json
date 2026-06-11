@@ -75,6 +75,12 @@
                     "file": "fonts/EmporiumNF.ttf",
                     "name": "FONT_TIME_110",
                     "type": "font"
+                },
+                {
+                    "file": "images/screenshot-download.png",
+                    "name": "PT2_SS",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
                 }
             ]
         },
