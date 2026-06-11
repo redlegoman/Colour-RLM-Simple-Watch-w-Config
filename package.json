@@ -2,12 +2,12 @@
     "author": "Andy McDade",
     "dependencies": {},
     "keywords": [],
-    "name": "rlmsimplecolourconfig",
+    "name": "rlmsimplecolourconfig3",
     "pebble": {
         "capabilities": [
             "configurable"
         ],
-        "displayName": "RLM Simple Watch 2 w/Config",
+        "displayName": "RLM Simple Watch 2 w/Config DEV",
         "enableMultiJS": false,
         "messageKeys": {
             "D_KEY_COLOR_BLUE": 9,
@@ -83,10 +83,10 @@
             "diorite",
             "emery"
         ],
-        "uuid": "ad143b00-a79d-4b9e-ae15-0c579202ab52",
+        "uuid": "5c2f7f32-785e-4fbf-9051-a66f98befedc",
         "watchapp": {
             "watchface": true
         }
     },
-    "version": "2.000.0"
+    "version": "3.0.0"
 }

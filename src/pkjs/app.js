@@ -3,77 +3,93 @@ Pebble.addEventListener('ready', function() {
 });
 
 Pebble.addEventListener('showConfiguration', function() {
-  //var url = 'https://cdn.rawgit.com/redlegoman/Colour-RLM-Simple-Watch-w-Config/7f38c0810e23b60f1dc8a951704aea94b1984518/web/index.html';
+  var url = 'https://redlegoman.github.io/Colour-RLM-Simple-Watch-w-Config/testindex.html?2.2';
   
-  //var url = 'https://rawgit.com/redlegoman/Colour-RLM-Simple-Watch-w-Config/fixconfig/web/test4.html?01';
-  
-  //var url = 'https://cdn.rawgit.com/redlegoman/Colour-RLM-Simple-Watch-w-Config/2bccaac62b1450725c93d48492b8004bd332852a/web/v2.html';
-  //var url = 'http://redlegoman.github.io/Colour-RLM-Simple-Watch-w-Config/index.html';
-  var url = 'https://redlegoman.github.io/Colour-RLM-Simple-Watch-w-Config/testindex.html';
-  
-  /*
-  
-  Above URL is on github (https://github.com/redlegoman/Colour-RLM-Simple-Watch-w-Config) and RELIES
-  ON IT BEING THERE - DO NOT DELETE IT!
-  
-  */
-  console.log('Showing configuration page: ' + url);
+  // Retrieve saved settings from the phone's local storage
+  var savedConfig = localStorage.getItem('rlm_watch_config');
+  if (savedConfig) {
+    try {
+      var configData = JSON.parse(savedConfig);
+      var params = [];
+      for (var key in configData) {
+        params.push(encodeURIComponent(key) + '=' + encodeURIComponent(configData[key]));
+      }
+      // Append saved settings to the URL so the HTML page can read them
+      url += '?' + params.join('&');
+    } catch(e) {
+      console.log('Error parsing saved config');
+    }
+  }
 
+  console.log('Showing configuration page: ' + url);
   Pebble.openURL(url);
 });
 
+// Safely extract RGB regardless of how the HTML formats the string/number
+function parseColor(colorValue) {
+  if (colorValue === undefined || colorValue === null || colorValue === '') {
+    return {r: 0, g: 0, b: 0};
+  }
+  
+  var hex;
+  if (typeof colorValue === 'number') {
+    hex = colorValue.toString(16);
+  } else {
+    hex = colorValue.toString().replace('#', '').replace('0x', '');
+  }
+  
+  while (hex.length < 6) {
+    hex = '0' + hex;
+  }
+  
+  return {
+    r: parseInt(hex.substring(0, 2), 16) || 0,
+    g: parseInt(hex.substring(2, 4), 16) || 0,
+    b: parseInt(hex.substring(4, 6), 16) || 0
+  };
+}
+
 Pebble.addEventListener('webviewclosed', function(e) {
+  if (!e.response || e.response === "CANCELLED" || e.response === "{}") {
+    console.log('Configuration cancelled');
+    return;
+  }
+
   var configData = JSON.parse(decodeURIComponent(e.response));
   console.log('Configuration page returned: ' + JSON.stringify(configData));
 
-  var backgroundColor = configData['background_color'];
-  var timeColor = configData['time_color'];
-  var dateColor = configData['date_color'];
-  var secsColor = configData['secs_color'];
+  // Save the new settings to local storage so they are remembered next time
+  localStorage.setItem('rlm_watch_config', JSON.stringify(configData));
+
+  var bg = parseColor(configData['background_color']);
+  var time = parseColor(configData['time_color']);
+  var date = parseColor(configData['date_color']);
+  var secs = parseColor(configData['secs_color']); 
   
-  //**
-  var config_set = configData['config_set'];
-  //**
-
-  var show_secs = configData['show_secs'];
-
   var dict = {};
-  //if(configData['high_contrast'] === true) {
-    //dict['KEY_HIGH_CONTRAST'] = configData['high_contrast'] ? 1 : 0;  // Send a boolean as an integer
-  //} else {
-    dict['KEY_COLOR_RED'] = parseInt(backgroundColor.substring(2, 4), 16);
-    dict['KEY_COLOR_GREEN'] = parseInt(backgroundColor.substring(4, 6), 16);
-    dict['KEY_COLOR_BLUE'] = parseInt(backgroundColor.substring(6), 16);
-    
-    dict['T_KEY_COLOR_RED'] = parseInt(timeColor.substring(2, 4), 16);
-    dict['T_KEY_COLOR_GREEN'] = parseInt(timeColor.substring(4, 6), 16);
-    dict['T_KEY_COLOR_BLUE'] = parseInt(timeColor.substring(6), 16);
-    
-    dict['D_KEY_COLOR_RED'] = parseInt(dateColor.substring(2, 4), 16);
-    dict['D_KEY_COLOR_GREEN'] = parseInt(dateColor.substring(4, 6), 16);
-    dict['D_KEY_COLOR_BLUE'] = parseInt(dateColor.substring(6), 16);
-    
-    dict['S_KEY_COLOR_RED'] = parseInt(secsColor.substring(2, 4), 16);
-    dict['S_KEY_COLOR_GREEN'] = parseInt(secsColor.substring(4, 6), 16);
-    dict['S_KEY_COLOR_BLUE'] = parseInt(secsColor.substring(6), 16);
   
-    dict['KEY_CONFIG_SET'] = parseInt(config_set);
-
-    if(configData['show_secs'] === true) {
-    dict['KEY_SHOW_SECS'] = configData['show_secs'] ? 1 : 0;  // Send a boolean as an integer
-    }
-    dict['KEY_SHOW_SECS'] = show_secs;
-    
-  console.log(' **  (JS) test point here');
-  //console.log(config_set);
-    
-    
-  //}
-
-  // Send to watchapp
+  dict['KEY_COLOR_RED'] = bg.r;
+  dict['KEY_COLOR_GREEN'] = bg.g;
+  dict['KEY_COLOR_BLUE'] = bg.b;
+  
+  dict['T_KEY_COLOR_RED'] = time.r;
+  dict['T_KEY_COLOR_GREEN'] = time.g;
+  dict['T_KEY_COLOR_BLUE'] = time.b;
+  
+  dict['D_KEY_COLOR_RED'] = date.r;
+  dict['D_KEY_COLOR_GREEN'] = date.g;
+  dict['D_KEY_COLOR_BLUE'] = date.b;
+  
+  dict['S_KEY_COLOR_RED'] = secs.r;
+  dict['S_KEY_COLOR_GREEN'] = secs.g;
+  dict['S_KEY_COLOR_BLUE'] = secs.b;
+  
+  dict['KEY_CONFIG_SET'] = parseInt(configData['config_set']) || 1;
+  dict['KEY_SHOW_SECS'] = configData['show_secs'] ? 1 : 0;
+  
   Pebble.sendAppMessage(dict, function() {
-    console.log('Send successful: ' + JSON.stringify(dict));
-  }, function() {
-    console.log('Send failed!');
+    console.log('Send successful.');
+  }, function(error) {
+    console.log('Send failed: ' + JSON.stringify(error));
   });
 });
