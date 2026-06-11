@@ -173,7 +173,7 @@ static void main_window_load(Window *window) {
   s_day_font =
       fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SARA_27));
   s_time_font =
-      fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_TIME_68));
+      fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_TIME_80));
 
   // Time Layer - Center target anchor point
   // Adjust time_y slightly higher if needed to keep it centered
