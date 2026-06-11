@@ -242,8 +242,8 @@ static void main_window_load(Window *window) {
   } else {
     window_set_background_color(s_main_window, GColorBlack);
     text_layer_set_text_color(s_time_layer, GColorWhite);
-    text_layer_set_text_color(s_day_layer, GColorPictonBlue);
-    text_layer_set_text_color(s_date_layer, GColorPictonBlue);
+    text_layer_set_text_color(s_day_layer, GColorRed);
+    text_layer_set_text_color(s_date_layer, GColorRed);
     text_layer_set_text_color(s_right_layer, GColorWhite);
   }
   text_layer_set_text_color(s_left_layer, GColorWhite);
