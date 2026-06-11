@@ -176,8 +176,8 @@ static void main_window_load(Window *window) {
       fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_TIME_110));
 
   // Time Layer - Center target anchor point
-  // Adjust time_y slightly higher to balance the larger font
-  int time_y = (bounds.size.h / 2) - 35;
+  // Adjust time_y significantly higher to compensate for font's top padding
+  int time_y = (bounds.size.h / 2) - 85;
   // Increase the height to accommodate the larger font
   s_time_layer = text_layer_create(GRect(0, time_y, bounds.size.w, 120));
 
@@ -187,7 +187,7 @@ static void main_window_load(Window *window) {
   layer_add_child(window_layer, text_layer_get_layer(s_time_layer));
 
   // Day Layer - Positioned ABOVE the time, aligned LEFT
-  int day_y = time_y - 35;
+  int day_y = time_y - 10;
   s_day_layer = text_layer_create(GRect(4, day_y, bounds.size.w - 8, 35));
   text_layer_set_background_color(s_day_layer, GColorClear);
   text_layer_set_font(s_day_layer, s_day_font);
@@ -195,7 +195,7 @@ static void main_window_load(Window *window) {
   layer_add_child(window_layer, text_layer_get_layer(s_day_layer));
 
   // Date Layer - Positioned BELOW the time, aligned RIGHT
-  int date_y = time_y + 95;
+  int date_y = time_y + 135;
   s_date_layer = text_layer_create(GRect(4, date_y, bounds.size.w - 8, 35));
   text_layer_set_background_color(s_date_layer, GColorClear);
   text_layer_set_font(s_date_layer, s_day_font);
