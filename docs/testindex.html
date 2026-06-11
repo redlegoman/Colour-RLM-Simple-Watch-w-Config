@@ -200,4 +200,58 @@
     }
   })();
   </script>
+
+
+<script>
+  // Helper function to read the URL parameters
+  function getQueryParam(variable, defaultValue) {
+    var query = location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split('=');
+      if (pair[0] === variable) {
+        return decodeURIComponent(pair[1]);
+      }
+    }
+    return defaultValue || null;
+  }
+
+  // When the page loads, grab the colors from the URL and apply them to your pickers
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // 1. Get the values from the URL (falling back to default colors if none exist)
+    var savedBgColor = getQueryParam('background_color', '#000000');
+    var savedTimeColor = getQueryParam('time_color', '#ffffff');
+    var savedDateColor = getQueryParam('date_color', '#00aaff');
+    var savedSecsColor = getQueryParam('secs_color', '#ffffff');
+    var savedConfigSet = getQueryParam('config_set', '1');
+    var savedShowSecs = getQueryParam('show_secs', 'false');
+
+    // 2. Apply them to your HTML inputs. 
+    // IMPORTANT: Change 'bg_color_input' to the actual ID of your HTML element!
+    if (document.getElementById('bg_color_input')) {
+      document.getElementById('bg_color_input').value = savedBgColor;
+    }
+    if (document.getElementById('time_color_input')) {
+      document.getElementById('time_color_input').value = savedTimeColor;
+    }
+    if (document.getElementById('date_color_input')) {
+      document.getElementById('date_color_input').value = savedDateColor;
+    }
+    if (document.getElementById('secs_color_input')) {
+      document.getElementById('secs_color_input').value = savedSecsColor;
+    }
+    
+    // If you have a config set dropdown or radio button
+    if (document.getElementById('config_set_input')) {
+      document.getElementById('config_set_input').value = savedConfigSet;
+    }
+
+    // If you have a checkbox for showing seconds
+    if (document.getElementById('show_secs_input')) {
+      document.getElementById('show_secs_input').checked = (savedShowSecs === 'true' || savedShowSecs === '1');
+    }
+  });
+</script>
+	
 </html>
