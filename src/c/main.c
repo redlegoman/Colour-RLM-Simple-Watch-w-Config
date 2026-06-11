@@ -195,7 +195,7 @@ static void main_window_load(Window *window) {
   layer_add_child(window_layer, text_layer_get_layer(s_day_layer));
 
   // Date Layer - Positioned BELOW the time, aligned RIGHT
-  int date_y = time_y + 122; // Keeps '11 jun' at y=164
+  int date_y = time_y + 110; // Keeps '11 jun' at y=164
   s_date_layer = text_layer_create(GRect(4, date_y, bounds.size.w - 8, 35));
   text_layer_set_background_color(s_date_layer, GColorClear);
   text_layer_set_font(s_date_layer, s_day_font);
