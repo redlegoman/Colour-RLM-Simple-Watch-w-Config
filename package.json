@@ -73,7 +73,7 @@
                     "characterRegex": "[0-9:]",
                     "compatibility": "2.7",
                     "file": "fonts/EmporiumNF.ttf",
-                    "name": "FONT_TIME_80",
+                    "name": "FONT_TIME_110",
                     "type": "font"
                 }
             ]
