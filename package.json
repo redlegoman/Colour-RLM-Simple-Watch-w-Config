@@ -7,30 +7,31 @@
         "capabilities": [
             "configurable"
         ],
-        "displayName": "RLM Simple Watch 2 w/Config DEV",
-        "enableMultiJS": false,
-        "messageKeys": {
-            "D_KEY_COLOR_BLUE": 9,
-            "D_KEY_COLOR_GREEN": 8,
-            "D_KEY_COLOR_RED": 7,
-            "KEY_COLOR_BLUE": 2,
-            "KEY_COLOR_GREEN": 1,
-            "KEY_COLOR_RED": 0,
-            "KEY_CONFIG_SET": 13,
-            "KEY_HIGH_CONTRAST": 3,
-            "KEY_SHOW_SECS": 14,
-            "S_KEY_COLOR_BLUE": 12,
-            "S_KEY_COLOR_GREEN": 11,
-            "S_KEY_COLOR_RED": 10,
-            "T_KEY_COLOR_BLUE": 6,
-            "T_KEY_COLOR_GREEN": 5,
-            "T_KEY_COLOR_RED": 4
-        },
+        "displayName": "RLM Simple Watch PT2",
+        "enableMultiJS": true,
+        "messageKeys": [
+            "KEY_COLOR_RED",
+            "KEY_COLOR_GREEN",
+            "KEY_COLOR_BLUE",
+            "KEY_HIGH_CONTRAST",
+            "T_KEY_COLOR_RED",
+            "T_KEY_COLOR_GREEN",
+            "T_KEY_COLOR_BLUE",
+            "D_KEY_COLOR_RED",
+            "D_KEY_COLOR_GREEN",
+            "D_KEY_COLOR_BLUE",
+            "S_KEY_COLOR_RED",
+            "S_KEY_COLOR_GREEN",
+            "S_KEY_COLOR_BLUE",
+            "KEY_CONFIG_SET",
+            "KEY_SHOW_SECS"
+        ],
         "projectType": "native",
         "resources": {
             "media": [
                 {
                     "file": "images/color-screenshot_download25.png",
+                    "menuIcon": true,
                     "name": "IMAGE_MENU_2",
                     "targetPlatforms": null,
                     "type": "png"
@@ -73,22 +74,18 @@
                     "compatibility": "2.7",
                     "file": "fonts/EmporiumNF.ttf",
                     "name": "FONT_TIME_80",
-                    "type": "font",
-                    "size": 80
+                    "type": "font"
                 }
             ]
         },
         "sdkVersion": "3",
         "targetPlatforms": [
-            "aplite",
-            "basalt",
-            "diorite",
             "emery"
         ],
-        "uuid": "5c2f7f32-785e-4fbf-9051-a66f98befedc",
+        "uuid": "cdcfaa98-b729-4ea1-b0f2-649c95e6f611",
         "watchapp": {
             "watchface": true
         }
     },
-    "version": "3.0.0"
+    "version": "4.0.0"
 }
