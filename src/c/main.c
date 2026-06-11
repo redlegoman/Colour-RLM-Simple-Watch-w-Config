@@ -208,7 +208,7 @@ static void main_window_load(Window *window) {
   text_layer_set_background_color(s_left_layer, GColorClear);
   text_layer_set_font(s_left_layer,
                       fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
-  layer_add_child(window_layer, text_layer_get_layer(s_left_layer));
+  // layer_add_child(window_layer, text_layer_get_layer(s_left_layer));
 
   s_right_layer =
       text_layer_create(GRect(bounds.size.w - 64, status_y, 60, 20));
