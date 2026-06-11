@@ -18,6 +18,7 @@
             "KEY_COLOR_RED": 0,
             "KEY_CONFIG_SET": 13,
             "KEY_HIGH_CONTRAST": 3,
+            "KEY_SHOW_SECS": 14,
             "S_KEY_COLOR_BLUE": 12,
             "S_KEY_COLOR_GREEN": 11,
             "S_KEY_COLOR_RED": 10,

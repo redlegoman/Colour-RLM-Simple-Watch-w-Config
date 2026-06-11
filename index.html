@@ -152,6 +152,14 @@
     return defaultValue || false;
   }
  
+  // Force strict hex format for Slate.js
+  function formatColor(val) {
+    if (!val) return '#000000';
+    var hex = val.toString().replace('#', '').replace('0x', '');
+    while (hex.length < 6) hex = '0' + hex;
+    return '#' + hex.substring(0, 6);
+  }
+ 
   var submitButton = document.getElementById('submit_button');
   submitButton.addEventListener('click', function() {
     console.log('Submit');
@@ -169,16 +177,31 @@
     var highContrastCheckbox = document.getElementById('high_contrast_checkbox');
     var config_set = document.getElementById('config_set');
 
-    // Load any previously saved configuration, if available
-    if(localStorage['high_contrast']) {
-      highContrastCheckbox.checked = JSON.parse(localStorage['high_contrast']);
-		}	
-    if(localStorage['config_set']) {
-      config_set.value = localStorage['config_set'];
-      backgroundColorPicker.value = localStorage['background_color'];
-      timeColorPicker.value = localStorage['time_color'];
-      dateColorPicker.value = localStorage['date_color'];
-      secsColorPicker.value = localStorage['secs_color'];
+    // Load saved configuration from query parameters, falling back to localStorage
+    var q_config_set = getQueryParam('config_set');
+    if (q_config_set !== false) {
+      if (config_set) config_set.value = q_config_set;
+      backgroundColorPicker.value = formatColor(getQueryParam('background_color'));
+      timeColorPicker.value = formatColor(getQueryParam('time_color'));
+      dateColorPicker.value = formatColor(getQueryParam('date_color'));
+      secsColorPicker.value = formatColor(getQueryParam('secs_color'));
+      
+      var q_high_contrast = getQueryParam('high_contrast');
+      if (highContrastCheckbox) {
+        highContrastCheckbox.checked = (q_high_contrast === 'true' || q_high_contrast === '1');
+      }
+    } else {
+      // Load any previously saved configuration, if available
+      if(localStorage['high_contrast'] && highContrastCheckbox) {
+        highContrastCheckbox.checked = JSON.parse(localStorage['high_contrast']);
+      }	
+      if(localStorage['config_set']) {
+        if (config_set) config_set.value = localStorage['config_set'];
+        backgroundColorPicker.value = formatColor(localStorage['background_color']);
+        timeColorPicker.value = formatColor(localStorage['time_color']);
+        dateColorPicker.value = formatColor(localStorage['date_color']);
+        secsColorPicker.value = formatColor(localStorage['secs_color']);
+      }
     }
   })();
   </script>

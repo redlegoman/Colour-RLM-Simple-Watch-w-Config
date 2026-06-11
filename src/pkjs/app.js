@@ -1,9 +1,13 @@
+var LOCAL_TEST = false; // Set to true to test local configuration page on your PC
+
 Pebble.addEventListener('ready', function() {
   console.log('PebbleKit JS ready!');
 });
 
 Pebble.addEventListener('showConfiguration', function() {
-  var url = 'https://redlegoman.github.io/Colour-RLM-Simple-Watch-w-Config/testindex.html?2.2';
+  var url = LOCAL_TEST 
+    ? 'file:///c:/Users/andy/pebble/Colour-RLM-Simple-Watch-w-Config/docs/testindex.html' 
+    : 'https://redlegoman.github.io/Colour-RLM-Simple-Watch-w-Config/testindex.html?2.2';
   
   // Retrieve saved settings from the phone's local storage
   var savedConfig = localStorage.getItem('rlm_watch_config');
@@ -15,7 +19,11 @@ Pebble.addEventListener('showConfiguration', function() {
         params.push(encodeURIComponent(key) + '=' + encodeURIComponent(configData[key]));
       }
       // Append saved settings to the URL so the HTML page can read them
-      url += '?' + params.join('&');
+      if (url.indexOf('?') !== -1) {
+        url += '&' + params.join('&');
+      } else {
+        url += '?' + params.join('&');
+      }
     } catch(e) {
       console.log('Error parsing saved config');
     }

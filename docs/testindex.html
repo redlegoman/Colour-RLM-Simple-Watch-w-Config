@@ -168,19 +168,41 @@
         var config_set = document.getElementById('config_set');
         var showSecsPicker = document.getElementById('show_secs_picker');
 
-        // Load any previously saved configuration, if available
-        if(localStorage['high_contrast'] !== undefined && highContrastCheckbox) {
-          highContrastCheckbox.checked = (localStorage['high_contrast'] === 'true');
-        }  
-        if(localStorage['config_set']) {
-          if (config_set) config_set.value = localStorage['config_set'];
-          backgroundColorPicker.value = formatColor(localStorage['background_color']);
-          timeColorPicker.value = formatColor(localStorage['time_color']);
-          dateColorPicker.value = formatColor(localStorage['date_color']);
-          secsColorPicker.value = formatColor(localStorage['secs_color']);
+        // Load saved configuration from query parameters, falling back to localStorage
+        var q_config_set = getQueryParam('config_set');
+        if (q_config_set !== false) {
+          if (config_set) config_set.value = q_config_set;
+          backgroundColorPicker.value = formatColor(getQueryParam('background_color'));
+          timeColorPicker.value = formatColor(getQueryParam('time_color'));
+          dateColorPicker.value = formatColor(getQueryParam('date_color'));
+          secsColorPicker.value = formatColor(getQueryParam('secs_color'));
           
-          // Checkboxes require boolean assignment
-          showSecsPicker.checked = (localStorage['show_secs'] === 'true');
+          var q_show_secs = getQueryParam('show_secs');
+          if (showSecsPicker) {
+            showSecsPicker.checked = (q_show_secs === 'true' || q_show_secs === '1');
+          }
+          
+          var q_high_contrast = getQueryParam('high_contrast');
+          if (highContrastCheckbox) {
+            highContrastCheckbox.checked = (q_high_contrast === 'true' || q_high_contrast === '1');
+          }
+        } else {
+          // Load any previously saved configuration, if available
+          if(localStorage['high_contrast'] !== undefined && highContrastCheckbox) {
+            highContrastCheckbox.checked = (localStorage['high_contrast'] === 'true');
+          }  
+          if(localStorage['config_set']) {
+            if (config_set) config_set.value = localStorage['config_set'];
+            backgroundColorPicker.value = formatColor(localStorage['background_color']);
+            timeColorPicker.value = formatColor(localStorage['time_color']);
+            dateColorPicker.value = formatColor(localStorage['date_color']);
+            secsColorPicker.value = formatColor(localStorage['secs_color']);
+            
+            // Checkboxes require boolean assignment
+            if (showSecsPicker) {
+              showSecsPicker.checked = (localStorage['show_secs'] === 'true');
+            }
+          }
         }
       })();
     </script>

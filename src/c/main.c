@@ -123,6 +123,9 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
     int d_red = d_color_red_t->value->int32;
     int d_green = d_color_green_t->value->int32;
     int d_blue = d_color_blue_t->value->int32;
+    int s_red = s_color_red_t ? s_color_red_t->value->int32 : 0;
+    int s_green = s_color_green_t ? s_color_green_t->value->int32 : 0;
+    int s_blue = s_color_blue_t ? s_color_blue_t->value->int32 : 0;
     int config_set = config_set_t->value->int32;
 
     persist_write_int(KEY_COLOR_RED, red);
@@ -134,6 +137,9 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
     persist_write_int(D_KEY_COLOR_RED, d_red);
     persist_write_int(D_KEY_COLOR_GREEN, d_green);
     persist_write_int(D_KEY_COLOR_BLUE, d_blue);
+    persist_write_int(S_KEY_COLOR_RED, s_red);
+    persist_write_int(S_KEY_COLOR_GREEN, s_green);
+    persist_write_int(S_KEY_COLOR_BLUE, s_blue);
     persist_write_int(KEY_CONFIG_SET, config_set);
 
     if (config_set == 1) {
@@ -141,6 +147,7 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
       text_layer_set_text_color(s_time_layer, GColorFromRGB(t_red, t_green, t_blue));
       text_layer_set_text_color(s_day_layer, GColorFromRGB(d_red, d_green, d_blue));
       text_layer_set_text_color(s_date_layer, GColorFromRGB(d_red, d_green, d_blue));
+      text_layer_set_text_color(s_right_layer, GColorFromRGB(s_red, s_green, s_blue));
     }
 #elif defined(PBL_BW)
     window_set_background_color(s_main_window, GColorBlack);
@@ -202,14 +209,15 @@ static void main_window_load(Window *window) {
     text_layer_set_text_color(s_time_layer, GColorFromRGB(persist_read_int(T_KEY_COLOR_RED), persist_read_int(T_KEY_COLOR_GREEN), persist_read_int(T_KEY_COLOR_BLUE)));
     text_layer_set_text_color(s_day_layer, GColorFromRGB(persist_read_int(D_KEY_COLOR_RED), persist_read_int(D_KEY_COLOR_GREEN), persist_read_int(D_KEY_COLOR_BLUE)));
     text_layer_set_text_color(s_date_layer, GColorFromRGB(persist_read_int(D_KEY_COLOR_RED), persist_read_int(D_KEY_COLOR_GREEN), persist_read_int(D_KEY_COLOR_BLUE)));
+    text_layer_set_text_color(s_right_layer, GColorFromRGB(persist_read_int(S_KEY_COLOR_RED), persist_read_int(S_KEY_COLOR_GREEN), persist_read_int(S_KEY_COLOR_BLUE)));
   } else {
     window_set_background_color(s_main_window, GColorBlack);
     text_layer_set_text_color(s_time_layer, GColorWhite);
     text_layer_set_text_color(s_day_layer, GColorPictonBlue);
     text_layer_set_text_color(s_date_layer, GColorPictonBlue);
+    text_layer_set_text_color(s_right_layer, GColorWhite);
   }
   text_layer_set_text_color(s_left_layer, GColorWhite);
-  text_layer_set_text_color(s_right_layer, GColorWhite);
 
   toggle_seconds_service();
   update_time();
