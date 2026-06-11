@@ -1,20 +1,20 @@
 #include <pebble.h>
-  
-#define KEY_COLOR_RED     0
-#define KEY_COLOR_GREEN   1
-#define KEY_COLOR_BLUE    2
+
+#define KEY_COLOR_RED 0
+#define KEY_COLOR_GREEN 1
+#define KEY_COLOR_BLUE 2
 #define KEY_HIGH_CONTRAST 3
-#define T_KEY_COLOR_RED   4
+#define T_KEY_COLOR_RED 4
 #define T_KEY_COLOR_GREEN 5
-#define T_KEY_COLOR_BLUE  6
-#define D_KEY_COLOR_RED   7
+#define T_KEY_COLOR_BLUE 6
+#define D_KEY_COLOR_RED 7
 #define D_KEY_COLOR_GREEN 8
-#define D_KEY_COLOR_BLUE  9
-#define S_KEY_COLOR_RED   10
+#define D_KEY_COLOR_BLUE 9
+#define S_KEY_COLOR_RED 10
 #define S_KEY_COLOR_GREEN 11
-#define S_KEY_COLOR_BLUE  12
-#define KEY_CONFIG_SET    13
-#define KEY_SHOW_SECS     14
+#define S_KEY_COLOR_BLUE 12
+#define KEY_CONFIG_SET 13
+#define KEY_SHOW_SECS 14
 
 static Window *s_main_window;
 static TextLayer *s_time_layer;
@@ -29,7 +29,7 @@ static GFont s_day_font;
 static bool s_show_seconds = true;
 
 static void update_time() {
-  time_t temp = time(NULL); 
+  time_t temp = time(NULL);
   struct tm *tick_time = localtime(&temp);
   BatteryChargeState chargeState = battery_state_service_peek();
 
@@ -39,9 +39,10 @@ static void update_time() {
   static char secs[] = "00";
   static char percent_show[] = "100%";
 
-  snprintf(percent_show, sizeof(percent_show), "%i%%", chargeState.charge_percent);
+  snprintf(percent_show, sizeof(percent_show), "%i%%",
+           chargeState.charge_percent);
 
-  if(clock_is_24h_style()) {
+  if (clock_is_24h_style()) {
     strftime(buffer, sizeof(buffer), "%H:%M", tick_time);
   } else {
     strftime(buffer, sizeof(buffer), "%I:%M", tick_time);
@@ -49,7 +50,7 @@ static void update_time() {
 
   strftime(day, sizeof(day), "%A", tick_time);
   strftime(date, sizeof(date), "%e %b", tick_time);
-  
+
   text_layer_set_text(s_time_layer, buffer);
   text_layer_set_text(s_day_layer, day);
   text_layer_set_text(s_date_layer, date);
@@ -61,7 +62,7 @@ static void update_time() {
   } else {
     text_layer_set_text(s_right_layer, "");
   }
-  
+
   text_layer_set_text(s_right_layer, "");
 }
 
@@ -80,7 +81,7 @@ static void toggle_seconds_service() {
 
 static void inbox_received_handler(DictionaryIterator *iter, void *context) {
   Tuple *high_contrast_t = dict_find(iter, KEY_HIGH_CONTRAST);
-  if(high_contrast_t && high_contrast_t->value->int8 > 0) {
+  if (high_contrast_t && high_contrast_t->value->int8 > 0) {
     window_set_background_color(s_main_window, GColorBlack);
     persist_write_bool(KEY_HIGH_CONTRAST, true);
   } else {
@@ -97,7 +98,7 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
   Tuple *color_red_t = dict_find(iter, KEY_COLOR_RED);
   Tuple *color_green_t = dict_find(iter, KEY_COLOR_GREEN);
   Tuple *color_blue_t = dict_find(iter, KEY_COLOR_BLUE);
-  
+
   Tuple *t_color_red_t = dict_find(iter, T_KEY_COLOR_RED);
   Tuple *t_color_green_t = dict_find(iter, T_KEY_COLOR_GREEN);
   Tuple *t_color_blue_t = dict_find(iter, T_KEY_COLOR_BLUE);
@@ -109,10 +110,10 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
   Tuple *s_color_red_t = dict_find(iter, S_KEY_COLOR_RED);
   Tuple *s_color_green_t = dict_find(iter, S_KEY_COLOR_GREEN);
   Tuple *s_color_blue_t = dict_find(iter, S_KEY_COLOR_BLUE);
-  
+
   Tuple *config_set_t = dict_find(iter, KEY_CONFIG_SET);
 
-  if(color_red_t && color_green_t && color_blue_t) {
+  if (color_red_t && color_green_t && color_blue_t) {
 #if defined(PBL_COLOR)
     int red = color_red_t->value->int32;
     int green = color_green_t->value->int32;
@@ -143,11 +144,16 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
     persist_write_int(KEY_CONFIG_SET, config_set);
 
     if (config_set == 1) {
-      window_set_background_color(s_main_window, GColorFromRGB(red, green, blue));
-      text_layer_set_text_color(s_time_layer, GColorFromRGB(t_red, t_green, t_blue));
-      text_layer_set_text_color(s_day_layer, GColorFromRGB(d_red, d_green, d_blue));
-      text_layer_set_text_color(s_date_layer, GColorFromRGB(d_red, d_green, d_blue));
-      text_layer_set_text_color(s_right_layer, GColorFromRGB(s_red, s_green, s_blue));
+      window_set_background_color(s_main_window,
+                                  GColorFromRGB(red, green, blue));
+      text_layer_set_text_color(s_time_layer,
+                                GColorFromRGB(t_red, t_green, t_blue));
+      text_layer_set_text_color(s_day_layer,
+                                GColorFromRGB(d_red, d_green, d_blue));
+      text_layer_set_text_color(s_date_layer,
+                                GColorFromRGB(d_red, d_green, d_blue));
+      text_layer_set_text_color(s_right_layer,
+                                GColorFromRGB(s_red, s_green, s_blue));
     }
 #elif defined(PBL_BW)
     window_set_background_color(s_main_window, GColorBlack);
@@ -164,12 +170,17 @@ static void main_window_load(Window *window) {
     s_show_seconds = persist_read_bool(KEY_SHOW_SECS);
   }
 
-  s_day_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SARA_27));
-  s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_TIME_68));
+  s_day_font =
+      fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SARA_27));
+  s_time_font =
+      fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_TIME_68));
 
   // Time Layer - Center target anchor point
-  int time_y = (bounds.size.h / 2) - 38;
-  s_time_layer = text_layer_create(GRect(0, time_y, bounds.size.w, 69));
+  // Adjust time_y slightly higher if needed to keep it centered
+  int time_y = (bounds.size.h / 2) - 45;
+  // Increase the height from 69 to accommodate the larger font (e.g., 85)
+  s_time_layer = text_layer_create(GRect(0, time_y, bounds.size.w, 85));
+
   text_layer_set_background_color(s_time_layer, GColorClear);
   text_layer_set_font(s_time_layer, s_time_font);
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
@@ -195,21 +206,39 @@ static void main_window_load(Window *window) {
   int status_y = bounds.size.h - 22;
   s_left_layer = text_layer_create(GRect(4, status_y, 60, 20));
   text_layer_set_background_color(s_left_layer, GColorClear);
-  text_layer_set_font(s_left_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
+  text_layer_set_font(s_left_layer,
+                      fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
   layer_add_child(window_layer, text_layer_get_layer(s_left_layer));
 
-  s_right_layer = text_layer_create(GRect(bounds.size.w - 64, status_y, 60, 20));
+  s_right_layer =
+      text_layer_create(GRect(bounds.size.w - 64, status_y, 60, 20));
   text_layer_set_background_color(s_right_layer, GColorClear);
   text_layer_set_text_alignment(s_right_layer, GTextAlignmentRight);
-  text_layer_set_font(s_right_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
+  text_layer_set_font(s_right_layer,
+                      fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
   layer_add_child(window_layer, text_layer_get_layer(s_right_layer));
 
   if (persist_read_int(KEY_CONFIG_SET) == 1) {
-    window_set_background_color(s_main_window, GColorFromRGB(persist_read_int(KEY_COLOR_RED), persist_read_int(KEY_COLOR_GREEN), persist_read_int(KEY_COLOR_BLUE)));
-    text_layer_set_text_color(s_time_layer, GColorFromRGB(persist_read_int(T_KEY_COLOR_RED), persist_read_int(T_KEY_COLOR_GREEN), persist_read_int(T_KEY_COLOR_BLUE)));
-    text_layer_set_text_color(s_day_layer, GColorFromRGB(persist_read_int(D_KEY_COLOR_RED), persist_read_int(D_KEY_COLOR_GREEN), persist_read_int(D_KEY_COLOR_BLUE)));
-    text_layer_set_text_color(s_date_layer, GColorFromRGB(persist_read_int(D_KEY_COLOR_RED), persist_read_int(D_KEY_COLOR_GREEN), persist_read_int(D_KEY_COLOR_BLUE)));
-    text_layer_set_text_color(s_right_layer, GColorFromRGB(persist_read_int(S_KEY_COLOR_RED), persist_read_int(S_KEY_COLOR_GREEN), persist_read_int(S_KEY_COLOR_BLUE)));
+    window_set_background_color(
+        s_main_window, GColorFromRGB(persist_read_int(KEY_COLOR_RED),
+                                     persist_read_int(KEY_COLOR_GREEN),
+                                     persist_read_int(KEY_COLOR_BLUE)));
+    text_layer_set_text_color(
+        s_time_layer, GColorFromRGB(persist_read_int(T_KEY_COLOR_RED),
+                                    persist_read_int(T_KEY_COLOR_GREEN),
+                                    persist_read_int(T_KEY_COLOR_BLUE)));
+    text_layer_set_text_color(
+        s_day_layer, GColorFromRGB(persist_read_int(D_KEY_COLOR_RED),
+                                   persist_read_int(D_KEY_COLOR_GREEN),
+                                   persist_read_int(D_KEY_COLOR_BLUE)));
+    text_layer_set_text_color(
+        s_date_layer, GColorFromRGB(persist_read_int(D_KEY_COLOR_RED),
+                                    persist_read_int(D_KEY_COLOR_GREEN),
+                                    persist_read_int(D_KEY_COLOR_BLUE)));
+    text_layer_set_text_color(
+        s_right_layer, GColorFromRGB(persist_read_int(S_KEY_COLOR_RED),
+                                     persist_read_int(S_KEY_COLOR_GREEN),
+                                     persist_read_int(S_KEY_COLOR_BLUE)));
   } else {
     window_set_background_color(s_main_window, GColorBlack);
     text_layer_set_text_color(s_time_layer, GColorWhite);
@@ -235,12 +264,12 @@ static void main_window_unload(Window *window) {
 
 static void init() {
   app_message_register_inbox_received(inbox_received_handler);
-  app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
+  app_message_open(app_message_inbox_size_maximum(),
+                   app_message_outbox_size_maximum());
   s_main_window = window_create();
-  window_set_window_handlers(s_main_window, (WindowHandlers) {
-    .load = main_window_load,
-    .unload = main_window_unload
-  });
+  window_set_window_handlers(
+      s_main_window,
+      (WindowHandlers){.load = main_window_load, .unload = main_window_unload});
   window_stack_push(s_main_window, true);
 }
 
