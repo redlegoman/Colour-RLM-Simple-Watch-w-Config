@@ -26,7 +26,7 @@ static TextLayer *s_right_layer;
 static GFont s_time_font;
 static GFont s_day_font;
 
-static bool s_show_seconds = true;
+static bool s_show_seconds = false;
 
 static void update_time() {
   time_t temp = time(NULL);
