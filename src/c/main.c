@@ -62,8 +62,6 @@ static void update_time() {
   } else {
     text_layer_set_text(s_right_layer, "");
   }
-
-  text_layer_set_text(s_right_layer, "");
 }
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
